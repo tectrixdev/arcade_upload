@@ -4,7 +4,7 @@ import { Rubik_Mono_One } from "next/font/google";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import insert from "@/components/inserturl";
+import { insert } from "@/components/inserturl";
 
 const rubikMono = Rubik_Mono_One({
   weight: "400",
@@ -43,7 +43,7 @@ export default function Home() {
   const handleSubmit = async () => {
     if (isValid) {
       insert(url);
-      alert("URL is valid!");
+      alert("uploaded project, this may take up to 1 minute to process");
     } else {
       alert("input the share project url/link here instead of the editor");
     }

@@ -1,7 +1,9 @@
 "use server";
 import { neon } from "@neondatabase/serverless";
 
-export default async function insert(url: string) {
-  const sql = neon(`${process.env.DATABASE_URL}`);
-  await sql`INSERT INTO url (url) VALUES (${url})`;
+const sql = neon(`${process.env.DATABASE_URL}`);
+
+export async function insert(url: string) {
+  const unixtime = Math.floor(Date.now() / 1000);
+  await sql`INSERT INTO url (url, time) VALUES (${url}, ${unixtime})`;
 }
