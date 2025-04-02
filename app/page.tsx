@@ -4,7 +4,7 @@ import { Rubik_Mono_One } from "next/font/google";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { neon } from "@neondatabase/serverless";
+import insert from "@/components/inserturl";
 
 const rubikMono = Rubik_Mono_One({
   weight: "400",
@@ -40,16 +40,14 @@ export default function Home() {
     setIsValid(validateUrl(value));
   };
 
-  async function handleSubmit() {
+  const handleSubmit = async () => {
     if (isValid) {
+      insert(url);
       alert("URL is valid!");
-      const sql = neon(`${process.env.DATABASE_URL}`);
-      await sql`INSERT INTO projects (url) VALUES (${url})`;
     } else {
       alert("input the share project url/link here instead of the editor");
     }
-  }
-
+  };
   return (
     <motion.main
       className="flex flex-col items-center"
