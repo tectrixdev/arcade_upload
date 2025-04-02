@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
 import { insert } from "@/components/inserturl";
+import { useEffect } from "react";
 
 const rubikMono = Rubik_Mono_One({
   weight: "400",
@@ -48,6 +49,7 @@ export default function Home() {
       alert("input the share project url/link here instead of the editor");
     }
   };
+
   return (
     <motion.main
       className="flex flex-col items-center"
