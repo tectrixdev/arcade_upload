@@ -43,7 +43,7 @@ export default function Home() {
   async function handleSubmit() {
     if (isValid) {
       alert("URL is valid!");
-      const sql = neon(process.env.DATABASE_URL);
+      const sql = neon(`${process.env.DATABASE_URL}`);
       await sql`INSERT INTO projects (url) VALUES (${url})`;
     } else {
       alert("input the share project url/link here instead of the editor");
