@@ -49,7 +49,23 @@ export default function Home() {
       alert("input the share project url/link here instead of the editor");
     }
   };
+  const MyComponent = () => {
+    const [message, setMessage] = useState("");
 
+    useEffect(() => {
+      const fetchMessage = async () => {
+        const response = await fetch("/api/status");
+        const data = await response.json();
+        setMessage(data);
+      };
+      fetchMessage();
+      const intervalId = setInterval(fetchMessage, 30000); // I'm probably stupid but I can't find a way to trigger this manually although it's fine, make a pull request if you know lmao
+
+      return () => clearInterval(intervalId);
+    }, []);
+
+    return message;
+  };
   return (
     <motion.main
       className="flex flex-col items-center"
@@ -102,7 +118,7 @@ export default function Home() {
         <motion.div
           key="input-button-wrapper"
           id="input-button-wrapper"
-          className="w-full flex flex-col md:flex-row items-center justify-center gap-4"
+          className="w-full flex flex-col items-center justify-center gap-4 md:mt-48"
           variants={itemVariants}
         >
           <input
@@ -125,16 +141,26 @@ export default function Home() {
           <button
             id="button"
             onClick={handleSubmit}
-            className={`rounded-lg px-5 py-2 cursor-pointer ${
+            className={`md:w-2/6 rounded-lg px-5 py-2 cursor-pointer ${
               isValid ? "bg-white text-black" : "bg-red-500 text-white"
             }`}
           >
             Add project
           </button>
+          <motion.div
+            className="text-white"
+            id="status"
+            variants={itemVariants}
+          >
+            cooldown status:{" "}
+            <strong>
+              <MyComponent />
+            </strong>
+          </motion.div>
         </motion.div>
         <Link
           href="https://github.com/tectrixdev/arcade_upload"
-          className="fixed bottom-0 w-full text-white h-10 flex items-center justify-center"
+          className="fixed bottom-0 w-full text-sm md:text-lg text-white h-10 flex items-center justify-center"
         >
           This project is open source! Click here to view it on github.
         </Link>

@@ -20,14 +20,18 @@ if (latestime <= allowedtime) {
   allowed = false;
 }
 if (allowed == true) {
-  response = `succesful`;
+  response = `no cooldown`;
 } else {
-  response = `cooldown of ${latestime - allowedtime}`;
+  response = `cooldown of ${latestime - allowedtime} seconds`;
 }
 
 export async function GET(request: Request) {
   return new Response(JSON.stringify(response), {
     status: 200,
-    headers: { "Content-Type": "application/json", "Cache-Control": "no-cache", "Connection": "keep-alive" },
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-cache",
+      Connection: "keep-alive",
+    },
   });
 }
