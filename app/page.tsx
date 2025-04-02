@@ -130,6 +130,12 @@ export default function Home() {
             Add project
           </button>
         </motion.div>
+        <Link
+          href="https://github.com/tectrixdev/arcade_upload"
+          className="fixed bottom-0 w-full text-white h-10 flex items-center justify-center"
+        >
+          This project is open source! Click here to view it on github.
+        </Link>
       </AnimatePresence>
     </motion.main>
   );
