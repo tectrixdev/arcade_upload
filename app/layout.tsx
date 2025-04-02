@@ -27,7 +27,9 @@ export default function RootLayout({
       <head>
         <meta name="darkreader-lock" />
       </head>
-      <body className="antialiased bg-black">{children}</body>
+      <body className="w-screen h-screen overflow-hidden antialiased bg-black">
+        {children}
+      </body>
     </html>
   );
 }

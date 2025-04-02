@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Rubik_Mono_One } from "next/font/google";
 import Link from "next/link";
 import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
 
 const rubikMono = Rubik_Mono_One({
   weight: "400",
@@ -24,6 +25,29 @@ const itemVariants = {
 };
 
 export default function Home() {
+  const [url, setUrl] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
+  const validateUrl = (input: string) => {
+    const regex = /^https:\/\/arcade\.makecode\.com\/[a-zA-Z0-9-]+$/;
+    return regex.test(input);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUrl(value);
+    setIsValid(validateUrl(value));
+  };
+
+  const handleSubmit = () => {
+    if (isValid) {
+      alert("URL is valid!");
+      // Add your submission logic here
+    } else {
+      alert("input the share project url/link here instead of the editor");
+    }
+  };
+
   return (
     <motion.main
       className="flex flex-col items-center"
@@ -73,6 +97,39 @@ export default function Home() {
           className="bg-white w-6/12 h-1 my-5 rounded-full"
           variants={itemVariants}
         />
+        <motion.div
+          key="input-button-wrapper"
+          id="input-button-wrapper"
+          className="w-full flex flex-col md:flex-row items-center justify-center gap-4"
+          variants={itemVariants}
+        >
+          <input
+            id="input"
+            value={url}
+            onChange={handleInputChange}
+            onFocus={handleInputChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSubmit();
+              }
+            }}
+            className={`h-10 w-5/6 md:w-2/6 px-5 text-center border-2 rounded-lg focus:outline-none ${
+              isValid
+                ? "border-white text-white"
+                : "border-red-500 text-red-500"
+            }`}
+            placeholder="https://arcade.makecode.com/xxx-xxx-xxx"
+          />
+          <button
+            id="button"
+            onClick={handleSubmit}
+            className={`rounded-lg px-5 py-2 cursor-pointer ${
+              isValid ? "bg-white text-black" : "bg-red-500 text-white"
+            }`}
+          >
+            Add project
+          </button>
+        </motion.div>
       </AnimatePresence>
     </motion.main>
   );
