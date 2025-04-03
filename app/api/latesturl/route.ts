@@ -6,11 +6,10 @@ type ResponseData = {
   message: string;
 };
 
-const sql = neon(`${process.env.DATABASE_URL}`);
-const rows = await sql`SELECT url FROM url ORDER BY id DESC LIMIT 1`;
-const response = rows[0]?.url || null;
-
 export async function GET(request: Request) {
+  const sql = neon(`${process.env.DATABASE_URL}`);
+  const rows = await sql`SELECT url FROM url ORDER BY id DESC LIMIT 1`;
+  const response = rows[0]?.url || null;
   return new Response(JSON.stringify(response), {
     status: 200,
     headers: {
