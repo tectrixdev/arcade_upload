@@ -64,7 +64,7 @@ export default function Home() {
     }, []);
 
     if (message == "") {
-      setMessage("loading...");
+      setMessage("loading, please wait");
     }
     return message;
   };
@@ -154,7 +154,7 @@ export default function Home() {
             id="status"
             variants={itemVariants}
           >
-            cooldown status:{" "}
+            status:{" "}
             <strong>
               <MyComponent />
             </strong>

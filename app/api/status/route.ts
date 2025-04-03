@@ -20,9 +20,9 @@ if (latestime <= allowedtime) {
   allowed = false;
 }
 if (allowed == true) {
-  response = `no cooldown`;
+  response = `Ready to upload`;
 } else {
-  response = `cooldown of ${latestime - allowedtime} seconds`;
+  response = `Please wait ${latestime - allowedtime} seconds`;
 }
 
 export async function GET(request: Request) {
