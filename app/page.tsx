@@ -58,7 +58,6 @@ export default function Home() {
         const data = await response.json();
         setMessage(data);
       };
-      fetchMessage();
       const intervalId = setInterval(fetchMessage, 30000); // I'm probably stupid but I can't find a way to trigger this manually although it's fine, make a pull request if you know lmao
 
       return () => clearInterval(intervalId);
