@@ -29,6 +29,7 @@ const itemVariants = {
 export default function Home() {
   const [url, setUrl] = useState("");
   const [isValid, setIsValid] = useState(true);
+  const [notification, setNotification] = useState<string | null>(null);
 
   const validateUrl = (input: string) => {
     const regex = /^https:\/\/arcade\.makecode\.com\/[a-zA-Z0-9-]+$/;
@@ -43,16 +44,26 @@ export default function Home() {
 
   const handleSubmit = async () => {
     if (isValid) {
-      const response = await fetch("/api/status", {
-        cache: "no-store",
-      });
-      const data = await response.json();
-      insert(url);
-      alert(data);
+      try {
+        const response = await fetch("/api/status", {
+          cache: "no-store",
+        });
+        const data = await response.json();
+        insert(url);
+        setNotification(data);
+      } catch (error) {
+        setNotification("An error occurred while adding the project.");
+      }
     } else {
-      alert("input the share project url/link here instead of the editor");
+      setNotification(
+        "Input the share project URL/link here instead of the editor."
+      );
     }
+
+    // Clear the notification after 3 seconds
+    setTimeout(() => setNotification(null), 5000);
   };
+
   return (
     <motion.main
       className="flex flex-col items-center"
@@ -134,6 +145,16 @@ export default function Home() {
           >
             Add project
           </button>
+          {notification && (
+            <motion.div
+              key="notification"
+              className="mt-2 text-center text-sm md:text-base px-4 py-2 rounded-lg text-black font-bold"
+              style={{ backgroundColor: `${notification[1]}` }}
+              variants={itemVariants}
+            >
+              {notification[0]}
+            </motion.div>
+          )}
         </motion.div>
         <Link
           href="https://github.com/tectrixdev/arcade_upload"

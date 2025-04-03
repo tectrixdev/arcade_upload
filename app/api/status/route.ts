@@ -8,7 +8,7 @@ type ResponseData = {
 };
 
 export async function GET(request: Request) {
-  let response: string;
+  let response: Array;
   const sql = neon(`${process.env.DATABASE_URL}`);
   const rows2 = await sql`SELECT time FROM url ORDER BY id DESC LIMIT 1`;
   const response2 = rows2[0]?.time || null;
@@ -22,11 +22,17 @@ export async function GET(request: Request) {
     allowed = false;
   }
   if (allowed == true) {
-    response = `Upload successful, this may take up to 1 minute to process.`;
+    response = [
+      `Upload successful, this may take up to 1 minute to process.`,
+      `green`,
+    ];
   } else {
-    response = `Please wait ${
-      latestime - allowedtime
-    } seconds before adding your project.`;
+    response = [
+      `Please wait ${
+        latestime - allowedtime
+      } seconds before adding your project.`,
+      `red`,
+    ];
   }
   return new Response(JSON.stringify(response), {
     status: 200,
