@@ -6,10 +6,10 @@ export async function insert(url: string) {
   const rows2 = await sql`SELECT time FROM url ORDER BY id DESC LIMIT 1`;
   const response2 = rows2[0]?.time || null;
   const unixdate = Math.floor(Date.now() / 1000);
-  const allowedtime = unixdate - 120;
+  const allowedtime = unixdate - 60;
   const latestime = response2;
   let allowed: boolean;
-  if (latestime <= allowedtime) {
+  if (latestime < allowedtime) {
     allowed = true;
   } else {
     allowed = false;
@@ -17,13 +17,10 @@ export async function insert(url: string) {
   if (allowed == true) {
     const unixtime = Math.floor(Date.now() / 1000);
     await sql`INSERT INTO url (url, time) VALUES (${url}, ${unixtime})`;
-    console.log("succesful");
+    console.log("project uploaded succesfully");
   } else {
-    console.log(`cooldown of ${latestime - allowedtime}`);
+    console.log(
+      `project not uploaded because of cooldown of ${latestime - allowedtime}`
+    );
   }
-  console.log(allowedtime);
-  console.log(latestime);
-  console.log(latestime - allowedtime);
-  console.log(allowed);
-  return allowed;
 }

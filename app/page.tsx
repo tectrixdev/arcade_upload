@@ -43,30 +43,15 @@ export default function Home() {
 
   const handleSubmit = async () => {
     if (isValid) {
+      const response = await fetch("/api/status", {
+        cache: "no-store",
+      });
+      const data = await response.json();
       insert(url);
-      alert("uploaded project, this may take up to 1 minute to process");
+      alert(data);
     } else {
       alert("input the share project url/link here instead of the editor");
     }
-  };
-  const MyComponent = () => {
-    const [message, setMessage] = useState("");
-
-    useEffect(() => {
-      const fetchMessage = async () => {
-        const response = await fetch("/api/status");
-        const data = await response.json();
-        setMessage(data);
-      };
-      const intervalId = setInterval(fetchMessage, 30000); // I'm probably stupid but I can't find a way to trigger this manually although it's fine, make a pull request if you know lmao
-
-      return () => clearInterval(intervalId);
-    }, []);
-
-    if (message == "") {
-      setMessage("loading, please wait");
-    }
-    return message;
   };
   return (
     <motion.main
@@ -149,16 +134,6 @@ export default function Home() {
           >
             Add project
           </button>
-          <motion.div
-            className="text-white"
-            id="status"
-            variants={itemVariants}
-          >
-            status:{" "}
-            <strong>
-              <MyComponent />
-            </strong>
-          </motion.div>
         </motion.div>
         <Link
           href="https://github.com/tectrixdev/arcade_upload"
