@@ -8,7 +8,7 @@ type ResponseData = {
 };
 
 export async function GET(request: Request) {
-  let response: Array;
+  let response: Array<string>;
   const sql = neon(`${process.env.DATABASE_URL}`);
   const rows2 = await sql`SELECT time FROM url ORDER BY id DESC LIMIT 1`;
   const response2 = rows2[0]?.time || null;
