@@ -63,6 +63,9 @@ export default function Home() {
       return () => clearInterval(intervalId);
     }, []);
 
+    if (message == "") {
+      setMessage("loading...");
+    }
     return message;
   };
   return (
