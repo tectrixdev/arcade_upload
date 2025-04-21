@@ -17,7 +17,7 @@ export async function insert(url: string) {
   if (allowed == true) {
     const unixtime = Math.floor(Date.now() / 1000);
     await sql`INSERT INTO url (url, time) VALUES (${url}, ${unixtime})`;
-    console.log("project uploaded succesfully");
+    console.log("project uploaded successfully");
   } else {
     console.log(
       `project not uploaded because of cooldown of ${latestime - allowedtime}`
