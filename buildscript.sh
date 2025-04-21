@@ -6,7 +6,7 @@
 
 
 # goofy way of checking if the package is already installed
-if [ $(pnpm list -g | grep makecode -o) == "makecode" ]; then
+if [ $(pnpm list -g | grep makecode -o) = "makecode" ]; then
     echo "skipping dependencies because they seem already present"
 else
     echo "installing the dependencies"
@@ -16,7 +16,7 @@ else
 fi
 
 # check if the time of the latest project on the database matches the time of the latest built package to allow re-entering the same url to update a project
-if [ $(curl https://upload.tectrix.dev/api/latestime -s | tr -d '"') == $(cat ~/Documents/latest.txt) ]; then
+if [ $(curl https://upload.tectrix.dev/api/latestime -s | tr -d '"') = $(cat ~/Documents/latest.txt) ]; then
     echo "no new projects found"
 else
     echo "setting up filetree"
