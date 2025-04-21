@@ -29,7 +29,8 @@ else
     echo "building project"
     mkc build -f rawELF --hw rpi
     # name file to project name
-    mv built/rpi/binary.elf ~/Documents/games/$(cat ~/Documents/arcade/pxt.json | jq -r '.name').elf
+    mkdir ~/Documents/games/ -p
+    mv built/rpi/binary.elf ~/Documents/games/$(cat ~/Documents/arcade/pxt.json | jq -r '.name' | tr -s ' ' '_').elf
     echo "finishing"
     echo $(curl https://upload.tectrix.dev/api/latestime -s | tr -d '"') > ~/Documents/latest.txt
     echo "done"
