@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 	const sql = neon(`${process.env.DATABASE_URL}`);
 	const rows2 = await sql`SELECT time FROM url ORDER BY id DESC LIMIT 1`;
 	const response2 = rows2[0]?.time || null;
-	const unixdate = Math.floor(Date.now() / 1000);
+	const unixdate = Math.floor(Date.now() / 1000) - 5; // account for possible overlap;
 	const allowedtime = unixdate - 120;
 	const latestime = response2;
 	let allowed: boolean;
