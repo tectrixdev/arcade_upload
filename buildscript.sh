@@ -6,21 +6,23 @@
 
 
 # goofy way of checking if the package is already installed
-if [ $(pnpm list -g | grep makecode -o) = "makecode" ]; then
-    echo "skipping dependencies because they seem already present"
-else
-    echo "installing the dependencies"
-    pnpm setup
-    source ~/.bashrc
-    pnpm i -g makecode -s
-fi
+#   if [ $(pnpm list -g | grep makecode -o) = "makecode" ]; then
+#       echo "skipping dependencies because they seem already present"
+#   else
+#       echo "installing the dependencies"
+#       pnpm setup
+#       source ~/.bashrc
+#       pnpm i -g makecode -s
+#   fi
+
+# this is currently not used because we're using npm in practice
 
 # check if the time of the latest project on the database matches the time of the latest built package to allow re-entering the same url to update a project
-if [ $(curl https://upload.tectrix.dev/api/latestime -s | tr -d '"') = $(cat ~/Documents/latest.txt) ]; then
+if [ $(curl https://upload.tectrix.dev/api/latestime -s | tr -d '"') = $(cat ~/latest.txt) ]; then
     echo "no new projects found"
 else
     echo "setting up filetree"
-    cd ~/Documents/
+    cd ~
     rm -r ./arcade/
     mkdir ./arcade/
     cd arcade/
@@ -29,9 +31,10 @@ else
     echo "building project"
     mkc build -f rawELF --hw rpi
     # name file to project name
-    mkdir ~/Documents/games/ -p
-    mv built/rpi/binary.elf ~/Documents/games/$(cat ~/Documents/arcade/pxt.json | jq -r '.name' | tr -s ' ' '_').elf
+    mv built/rpi/binary.elf ~/RetroPie/roms/makecode/$(cat ~/arcade/pxt.json | jq -r '.name' | tr -cd '[:alnum:] ' | tr ' ' '_' ).elf
     echo "finishing"
-    echo $(curl https://upload.tectrix.dev/api/latestime -s | tr -d '"') > ~/Documents/latest.txt
+    echo $(curl https://upload.tectrix.dev/api/latestime -s | tr -d '"') > ~/latest.txt
     echo "done"
+    sleep 5
+    play ~/ping.mp3
 fi
