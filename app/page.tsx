@@ -32,7 +32,7 @@ export default function Home() {
 	const [notification, setNotification] = useState<string | null>(null);
 
 	const validateUrl = (input: string) => {
-		const regex = /^https:\/\/arcade\.makecode\.com\/[a-zA-Z0-9-_]+$/;
+		const regex = /^https:\/\/(arcade\.makecode\.com\/[a-zA-Z0-9-]+|makecode\.com\/_[a-zA-Z0-9]+)$/;
 		return regex.test(input);
 	};
 
