@@ -16,13 +16,13 @@ fi
 
 echo "setting up filetree"
 rm -r /tmp/arcade/
-mkdir /tmp/arcade/
+mkdir /tmp/arcade/ -p
 cd /tmp/arcade/
 echo "downloading files"
 mkc download $1
 echo "building project"
 mkc build -f rawELF --hw rpi
-mkdir ~/compiled/
+mkdir ~/compiled/ -p
 mv built/rpi/binary.elf ~/compiled/$(cat /tmp/arcade/pxt.json | jq -r '.name' | tr -cd '[:alnum:] ' | tr ' ' '_').elf
 echo "finishing"
 echo "done"
