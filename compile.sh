@@ -22,6 +22,7 @@ echo "downloading files"
 mkc download $1
 echo "building project"
 mkc build -f rawELF --hw rpi
-mv built/rpi/binary.elf ~/$(cat /tmp/arcade/pxt.json | jq -r '.name' | tr -cd '[:alnum:] ' | tr ' ' '_').elf
+mkdir ~/compiled/
+mv built/rpi/binary.elf ~/compiled/$(cat /tmp/arcade/pxt.json | jq -r '.name' | tr -cd '[:alnum:] ' | tr ' ' '_').elf
 echo "finishing"
 echo "done"
